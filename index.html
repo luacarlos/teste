@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetShop CRM - Sistema de Gestão</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">🐾 PetShop CRM</h1>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-page="dashboard">
+                    <span class="icon">📊</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-page="customers">
+                    <span class="icon">👥</span>
+                    <span>Clientes</span>
+                </a>
+                <a href="#" class="nav-item" data-page="pets">
+                    <span class="icon">🐕</span>
+                    <span>Pets</span>
+                </a>
+                <a href="#" class="nav-item" data-page="appointments">
+                    <span class="icon">📅</span>
+                    <span>Agendamentos</span>
+                </a>
+                <a href="#" class="nav-item" data-page="services">
+                    <span class="icon">✂️</span>
+                    <span>Serviços</span>
+                </a>
+                <a href="#" class="nav-item" data-page="invoices">
+                    <span class="icon">💰</span>
+                    <span>Faturas</span>
+                </a>
+                <a href="#" class="nav-item" data-page="reports">
+                    <span class="icon">📈</span>
+                    <span>Relatórios</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <h2 class="page-title">Dashboard</h2>
+                </div>
+                <div class="header-right">
+                    <input type="text" class="search-box" placeholder="Buscar...">
+                    <button class="btn-icon">🔔</button>
+                    <button class="btn-icon">⚙️</button>
+                </div>
+            </header>
+
+            <!-- Pages Container -->
+            <div class="pages-container">
+                <!-- Dashboard Page -->
+                <div class="page active" id="page-dashboard">
+                    <div class="dashboard-grid">
+                        <div class="card stats-card">
+                            <div class="stats-item">
+                                <h3>Total de Clientes</h3>
+                                <p class="stat-value" id="total-customers">0</p>
+                            </div>
+                        </div>
+                        <div class="card stats-card">
+                            <div class="stats-item">
+                                <h3>Total de Pets</h3>
+                                <p class="stat-value" id="total-pets">0</p>
+                            </div>
+                        </div>
+                        <div class="card stats-card">
+                            <div class="stats-item">
+                                <h3>Agendamentos Hoje</h3>
+                                <p class="stat-value" id="today-appointments">0</p>
+                            </div>
+                        </div>
+                        <div class="card stats-card">
+                            <div class="stats-item">
+                                <h3>Receita do Mês</h3>
+                                <p class="stat-value" id="month-revenue">R$ 0,00</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <div class="card full-width">
+                            <h3>Próximos Agendamentos</h3>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Cliente</th>
+                                        <th>Pet</th>
+                                        <th>Serviço</th>
+                                        <th>Data/Hora</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="upcoming-appointments">
+                                    <tr><td colspan="5" class="text-center">Nenhum agendamento</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customers Page -->
+                <div class="page" id="page-customers">
+                    <div class="page-header">
+                        <h3>Gerenciar Clientes</h3>
+                        <button class="btn btn-primary" onclick="showCustomerModal()">+ Novo Cliente</button>
+                    </div>
+
+                    <div class="card">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Telefone</th>
+                                    <th>Email</th>
+                                    <th>Pets</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customers-table">
+                                <tr><td colspan="5" class="text-center">Nenhum cliente cadastrado</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Pets Page -->
+                <div class="page" id="page-pets">
+                    <div class="page-header">
+                        <h3>Gerenciar Pets</h3>
+                        <button class="btn btn-primary" onclick="showPetModal()">+ Novo Pet</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="pets-grid" id="pets-grid">
+                            <p class="text-center">Nenhum pet cadastrado</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Appointments Page -->
+                <div class="page" id="page-appointments">
+                    <div class="page-header">
+                        <h3>Agendamentos</h3>
+                        <button class="btn btn-primary" onclick="showAppointmentModal()">+ Novo Agendamento</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="calendar-container">
+                            <input type="date" id="appointment-date" class="form-control">
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Horário</th>
+                                    <th>Cliente</th>
+                                    <th>Pet</th>
+                                    <th>Serviço</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="appointments-table">
+                                <tr><td colspan="6" class="text-center">Nenhum agendamento</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Services Page -->
+                <div class="page" id="page-services">
+                    <div class="page-header">
+                        <h3>Serviços Oferecidos</h3>
+                        <button class="btn btn-primary" onclick="showServiceModal()">+ Novo Serviço</button>
+                    </div>
+
+                    <div class="card">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Descrição</th>
+                                    <th>Preço</th>
+                                    <th>Duração (min)</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="services-table">
+                                <tr><td colspan="5" class="text-center">Nenhum serviço cadastrado</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Invoices Page -->
+                <div class="page" id="page-invoices">
+                    <div class="page-header">
+                        <h3>Faturas</h3>
+                        <button class="btn btn-primary" onclick="showInvoiceModal()">+ Nova Fatura</button>
+                    </div>
+
+                    <div class="card">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Cliente</th>
+                                    <th>Data</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="invoices-table">
+                                <tr><td colspan="6" class="text-center">Nenhuma fatura</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Reports Page -->
+                <div class="page" id="page-reports">
+                    <div class="reports-grid">
+                        <div class="card">
+                            <h3>Receita Mensal</h3>
+                            <div class="chart-placeholder" id="revenue-chart">
+                                <p>Gráfico de receita</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h3>Serviços Mais Procurados</h3>
+                            <div class="chart-placeholder" id="services-chart">
+                                <p>Gráfico de serviços</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h3>Clientes por Mês</h3>
+                            <div class="chart-placeholder" id="customers-chart">
+                                <p>Gráfico de clientes</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h3>Taxa de Ocupação</h3>
+                            <div class="chart-placeholder" id="occupancy-chart">
+                                <p>Gráfico de ocupação</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="customer-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Novo Cliente</h3>
+                <button class="btn-close" onclick="closeModal('customer-modal')">&times;</button>
+            </div>
+            <form id="customer-form" onsubmit="handleCustomerSubmit(event)">
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input type="text" class="form-control" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label>Telefone</label>
+                    <input type="tel" class="form-control" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" name="email">
+                </div>
+                <div class="form-group">
+                    <label>Endereço</label>
+                    <input type="text" class="form-control" name="address">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('customer-modal')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="pet-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Novo Pet</h3>
+                <button class="btn-close" onclick="closeModal('pet-modal')">&times;</button>
+            </div>
+            <form id="pet-form" onsubmit="handlePetSubmit(event)">
+                <div class="form-group">
+                    <label>Nome do Pet</label>
+                    <input type="text" class="form-control" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label>Tipo</label>
+                    <select class="form-control" name="type" required>
+                        <option value="">Selecione</option>
+                        <option value="dog">Cachorro</option>
+                        <option value="cat">Gato</option>
+                        <option value="bird">Pássaro</option>
+                        <option value="other">Outro</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Raça</label>
+                    <input type="text" class="form-control" name="breed">
+                </div>
+                <div class="form-group">
+                    <label>Cliente</label>
+                    <select class="form-control" name="customer_id" required>
+                        <option value="">Selecione</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Data de Nascimento</label>
+                    <input type="date" class="form-control" name="birthdate">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('pet-modal')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="appointment-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Novo Agendamento</h3>
+                <button class="btn-close" onclick="closeModal('appointment-modal')">&times;</button>
+            </div>
+            <form id="appointment-form" onsubmit="handleAppointmentSubmit(event)">
+                <div class="form-group">
+                    <label>Cliente</label>
+                    <select class="form-control" name="customer_id" required>
+                        <option value="">Selecione</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Pet</label>
+                    <select class="form-control" name="pet_id" required>
+                        <option value="">Selecione</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Serviço</label>
+                    <select class="form-control" name="service_id" required>
+                        <option value="">Selecione</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Data</label>
+                    <input type="date" class="form-control" name="date" required>
+                </div>
+                <div class="form-group">
+                    <label>Horário</label>
+                    <input type="time" class="form-control" name="time" required>
+                </div>
+                <div class="form-group">
+                    <label>Observações</label>
+                    <textarea class="form-control" name="notes" rows="3"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('appointment-modal')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="service-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Novo Serviço</h3>
+                <button class="btn-close" onclick="closeModal('service-modal')">&times;</button>
+            </div>
+            <form id="service-form" onsubmit="handleServiceSubmit(event)">
+                <div class="form-group">
+                    <label>Nome do Serviço</label>
+                    <input type="text" class="form-control" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label>Descrição</label>
+                    <textarea class="form-control" name="description" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Preço (R$)</label>
+                    <input type="number" class="form-control" name="price" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label>Duração (minutos)</label>
+                    <input type="number" class="form-control" name="duration" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('service-modal')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="invoice-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Nova Fatura</h3>
+                <button class="btn-close" onclick="closeModal('invoice-modal')">&times;</button>
+            </div>
+            <form id="invoice-form" onsubmit="handleInvoiceSubmit(event)">
+                <div class="form-group">
+                    <label>Cliente</label>
+                    <select class="form-control" name="customer_id" required>
+                        <option value="">Selecione</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Data</label>
+                    <input type="date" class="form-control" name="date" required>
+                </div>
+                <div class="form-group">
+                    <label>Descrição</label>
+                    <textarea class="form-control" name="description" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Valor Total (R$)</label>
+                    <input type="number" class="form-control" name="total" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select class="form-control" name="status">
+                        <option value="pending">Pendente</option>
+                        <option value="paid">Pago</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('invoice-modal')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
