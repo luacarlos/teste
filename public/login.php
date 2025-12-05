@@ -1,11 +1,11 @@
 <?php
 session_start();
+require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../config/Database.php';
 require_once __DIR__ . '/../config/Auth.php';
 
-// Se já está autenticado, redireciona para dashboard
 if (isset($_SESSION['user_id'])) {
-    header('Location: /public/index.php');
+    header('Location: index.php');
     exit;
 }
 
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_email'] = $user['email'];
         $_SESSION['user_name'] = $user['nome'];
-        header('Location: /public/index.php');
+        header('Location: index.php');
         exit;
     } else {
         $error = 'Email ou senha inválidos';

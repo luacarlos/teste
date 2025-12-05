@@ -1,20 +1,23 @@
-<nav class="navbar">
-    <div class="navbar-container">
-        <div class="navbar-brand">
-            <h1>🐾 PetShop CRM</h1>
-        </div>
-        <div class="navbar-menu">
-            <a href="/public/index.php?page=dashboard" class="nav-link">Painel</a>
-            <a href="/public/index.php?page=clientes" class="nav-link">Clientes</a>
-            <a href="/public/index.php?page=animais" class="nav-link">Animais</a>
-            <a href="/public/index.php?page=agendamentos" class="nav-link">Agendamentos</a>
-            <a href="/public/index.php?page=servicos" class="nav-link">Serviços</a>
-            <a href="/public/index.php?page=faturas" class="nav-link">Faturas</a>
-            <a href="/public/index.php?page=relatorios" class="nav-link">Relatórios</a>
-        </div>
-        <div class="navbar-user">
-            <span><?php echo htmlspecialchars($_SESSION['user_name'] ?? 'Usuário'); ?></span>
-            <a href="/public/logout.php" class="btn btn-small">Sair</a>
-        </div>
+<?php
+$current_page = isset($_GET['page']) ? sanitizeInput($_GET['page']) : 'dashboard';
+$page_titles = [
+    'dashboard' => 'Painel de Controle',
+    'clientes' => 'Gerenciar Clientes',
+    'animais' => 'Gerenciar Pets',
+    'agendamentos' => 'Agendamentos',
+    'servicos' => 'Serviços Oferecidos',
+    'faturas' => 'Faturas',
+    'relatorios' => 'Relatórios e Análises'
+];
+$page_title = $page_titles[$current_page] ?? 'Painel de Controle';
+?>
+<header class="top-header">
+    <div class="header-left">
+        <h2><?php echo $page_title; ?></h2>
     </div>
-</nav>
+    <div class="header-right">
+        <input type="text" class="search-box" id="searchBox" placeholder="Pesquisar...">
+        <button class="btn-icon" onclick="toggleNotifications()">🔔</button>
+        <button class="btn-icon" onclick="toggleUserMenu()">👤</button>
+    </div>
+</header>
